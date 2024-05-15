@@ -1,0 +1,199 @@
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+// phpcs:disable Generic.Files.LineLength.TooLong
+
+/** @var \Magento\Contact\Block\ContactForm $block */
+/** @var \Magento\Contact\ViewModel\UserDataProvider $viewModel */
+
+$viewModel = $block->getViewModel();
+?>
+<h2>Deep dive into validator rules</h2>
+
+<form class="form"
+      action="#"
+      id="contact-form"
+      method="post"
+      data-mage-init='{"validation":{
+        "rules": {
+            "field5": {
+                "alphanumeric": true
+            }
+        }
+      }}'>
+    <fieldset class="fieldset">
+
+        <div class="field field1 required">
+            <label class="label" for="field1"><span><?= $block->escapeHtml(__('Metadata Rule')) ?></span></label>
+            <div class="control">
+                <input name="field1"
+                       id="field1"
+                       title="<?= $block->escapeHtmlAttr(__('Metadata Rule')) ?>"
+                       value="phoneUS"
+                       class="input-text"
+                       type="text"
+                       data-validate="{ phoneUS: true }"/>
+            </div>
+            <!--
+                data-validate="{ruleId: value}" -> metadataRules
+            -->
+        </div>
+
+        <div class="field field2 required">
+            <label class="label" for="field2"><span><?= $block->escapeHtml(__('Class Rule')) ?></span></label>
+            <div class="control">
+                <input name="field2"
+                       id="field2"
+                       title="<?= $block->escapeHtmlAttr(__('Class Rule')) ?>"
+                       value="time12h"
+                       class="input-text time12h"
+                       type="text"
+                       />
+            </div>
+            <!--
+                class="ruleId" -> classRules
+            -->
+        </div>
+        <div class="field field3 required">
+            <label class="label" for="field3"><span><?= $block->escapeHtml(__('Attribute Rule')) ?></span></label>
+            <div class="control">
+                <input name="field3"
+                       id="field3"
+                       title="<?= $block->escapeHtmlAttr(__('Attribute Rule')) ?>"
+                       value="ipv4"
+                       ipv4="true"
+                       class="input-text"
+                       type="text"
+                />
+            </div>
+            <!--
+                ruleId="true" -> attributeRules
+            -->
+        </div>
+
+        <div class="field field4 required">
+            <label class="label" for="field4"><span><?= $block->escapeHtml(__('Data Rule')) ?></span></label>
+            <div class="control">
+                <input name="field4"
+                       id="field4"
+                       title="<?= $block->escapeHtmlAttr(__('Data Rule')) ?>"
+                       value="data-rule-ipv6"
+                       class="input-text"
+                       type="text"
+                       data-rule-ipv6
+                />
+            </div>
+            <!--
+                data-rule-ruleId -> dataRules
+                data-rule-ruleId="true" -> dataRules
+            -->
+        </div>
+
+        <div class="field field5 required">
+            <label class="label" for="field5"><span><?= $block->escapeHtml(__('Static Rule')) ?></span></label>
+            <div class="control">
+                <input name="field5"
+                       id="field5"
+                       title="<?= $block->escapeHtmlAttr(__('Static Rule')) ?>"
+                       value="alpha-numeric"
+                       class="input-text"
+                       type="text"
+                />
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input type="hidden" name="hideit" id="hideit" value="" />
+            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>" class="action submit primary">
+                <span><?= $block->escapeHtml(__('Submit')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+
+<!--
+<form class="form contact"
+      action="<?= $block->escapeUrl($block->getFormAction()) ?>"
+      id="contact-form"
+      method="post"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Write Us')) ?></span></legend><br />
+        <div class="field note no-label">
+            <?= $block->escapeHtml(__('Jot us a note and we’ll get back to you as quickly as possible.')) ?>
+        </div>
+        <div class="field name required">
+            <label class="label" for="name"><span><?= $block->escapeHtml(__('Name')) ?></span></label>
+            <div class="control">
+                <input name="name"
+                       id="name"
+                       title="<?= $block->escapeHtmlAttr(__('Name')) ?>"
+                       value="<?= $block->escapeHtmlAttr($viewModel->getUserName()) ?>"
+                       class="input-text"
+                       type="text"
+                       data-validate="{required:true}"/>
+            </div>
+        </div>
+        <div class="field email required">
+            <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+            <div class="control">
+                <input name="email"
+                       id="email"
+                       title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
+                       value="<?= $block->escapeHtmlAttr($viewModel->getUserEmail()) ?>"
+                       class="input-text"
+                       type="email"
+                       data-validate="{required:true, 'validate-email':true}"
+                       data-mage-init='{"mage/trim-input":{}}'
+                />
+            </div>
+        </div>
+        <div class="field telephone">
+            <label class="label" for="telephone"><span><?= $block->escapeHtml(__('Phone Number')) ?></span></label>
+            <div class="control">
+                <input name="telephone"
+                       id="telephone"
+                       title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>"
+                       value="<?= $block->escapeHtmlAttr($viewModel->getUserTelephone()) ?>"
+                       class="input-text"
+                       type="tel" />
+            </div>
+        </div>
+        <div class="field comment required">
+            <label class="label" for="comment">
+                <span><?= $block->escapeHtml(__('What’s on your mind?')) ?></span>
+            </label>
+            <div class="control">
+                <textarea name="comment"
+                          id="comment"
+                          title="<?= $block->escapeHtmlAttr(__('What’s on your mind?')) ?>"
+                          class="input-text"
+                          cols="5"
+                          rows="3"
+                          data-validate="{required:true}"
+                ><?= $block->escapeHtml($viewModel->getUserComment()) ?></textarea>
+            </div>
+        </div>
+        <?php // = $block->getChildHtml('form.additional.info') ?>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input type="hidden" name="hideit" id="hideit" value="" />
+            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>" class="action submit primary">
+                <span><?= $block->escapeHtml(__('Submit')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+-->
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "contact-form"
+            }
+        }
+    }
+</script>
